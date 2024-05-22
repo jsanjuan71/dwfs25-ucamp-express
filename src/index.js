@@ -4,7 +4,7 @@ const { MongoClient, ObjectId } = require('mongodb');
 const mongoose = require('mongoose')
 
 
-const usersRouter = require('./routers/users.routes')
+const usersRouter = require('./routers/usuarios.routes')
 const productsRouter = require('./routers/products.routes')
 
 // Load environment variables
@@ -15,10 +15,7 @@ console.log("puerto", process.env.PORT)
 // SERVER initialization
 const app = express()
 
-mongoose.connect( process.env.MONGODB_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
+mongoose.connect( process.env.MONGODB_URL)
 
 // MIDDLEWARE
 app.use(express.json())
