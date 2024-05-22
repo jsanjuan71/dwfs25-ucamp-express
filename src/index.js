@@ -7,6 +7,8 @@ const mongoose = require('mongoose')
 const usersRouter = require('./routers/users.routes')
 const productsRouter = require('./routers/products.routes')
 
+const usuariosRouter = require('./routers/usuarios.routes')
+
 // Load environment variables
 dotenv.config()
 
@@ -26,6 +28,8 @@ app.use(express.json())
 // ROUTERS
 app.use( usersRouter )
 app.use( productsRouter )
+
+app.use( usuariosRouter )
 
 // ROOT ROUTE
 app.get('/', async(req, res) => {
