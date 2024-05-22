@@ -3,11 +3,13 @@ const router = express.Router()
 const controller = require('../controllers/usuarios.controllers')
 const bcryptjs = require('bcryptjs')
 
+const authenticator = require('../middlewares/authorization')
+
 // CRUD
 //router. ... get / post / put / delete , etc
 
 // GET /productos
-router.get('/usuarios', async(req, res) => {
+router.get('/usuarios', authenticator, async(req, res) => {
     const usuarios = await controller.getAll()
     res.json(usuarios)
 })
