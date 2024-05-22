@@ -31,22 +31,26 @@ router.post('/usuarios', async(req, res) => {
     }
 })
 
-router.put('/usuarios/ingresar', async(req, res) => {
+router.post('/usuarios/ingresar', async(req, res) => {
     try{
         const usuario = await controller.getByEmail(req.body.correo)
         if(!usuario){
-            res.status(404).json({result: 'Usuario no encontrado'})
+            return res.status(404).json({result: 'Usuario no encontrado'})
         }
 
         const claveCorrecta = await bcryptjs.compare(req.body.contrasena, usuario.contrasena)
         if(!claveCorrecta){
-            res.status(401).json({message: 'Credenciales incorrectas'})
+            return res.status(401).json({message: 'Contraseña incorrecta'})
         }
 
         const payload = {
             id: usuario._id,
             rol: usuario.rol
         }
+
+        const token = await controller.generarToken(payload)
+
+        res.json({result: token})
         
     } catch(error){
         res.status(400).json({result: error.message})
