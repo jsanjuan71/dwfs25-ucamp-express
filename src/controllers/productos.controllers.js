@@ -4,4 +4,8 @@ const getAll = async() => {
    return await Productos.find({})
 }
 
-module.exports = {getAll}
+const create = async(producto) => {
+   await Productos.create(producto)
+}
+
+module.exports = {getAll, create}

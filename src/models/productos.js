@@ -11,6 +11,10 @@ const productSchema = new mongoose.Schema({
         required: true,
         minlength: 5
     },
+    descripcion: {
+        type: String,
+        minlength: 50
+    },
     precio: {
         type: Number,
         min: 0,
@@ -30,7 +34,8 @@ const productSchema = new mongoose.Schema({
     categoria: {
         type: String,
         required: true,
-        enum: ['tecnologia', 'ropa', 'muebles', 'deportes', 'hogar']
+        enum: ['tecnologia', 'ropa', 'muebles', 'deportes', 'hogar','otros'],
+        default: 'otros'
     }
 })
 

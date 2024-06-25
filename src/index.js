@@ -2,12 +2,15 @@ const express = require('express')
 const dotenv = require('dotenv')
 const { MongoClient, ObjectId } = require('mongodb');
 const mongoose = require('mongoose')
+const cors = require("cors")
+const bodyParser = require('body-parser')
 
 
 const usersRouter = require('./routers/users.routes')
 const productsRouter = require('./routers/products.routes')
 
-const usuariosRouter = require('./routers/usuarios.routes')
+const usuariosRouter = require('./routers/usuarios.routes');
+const multer = require('multer');
 
 // Load environment variables
 dotenv.config()
@@ -22,8 +25,11 @@ mongoose.connect( process.env.MONGODB_URL, {
     useUnifiedTopology: true
 })
 
-// MIDDLEWARE
+app.use(cors())
+
 app.use(express.json())
+
+app.use( express.static('uploads') )
 
 // ROUTERS
 app.use( usersRouter )
