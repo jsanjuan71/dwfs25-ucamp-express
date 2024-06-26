@@ -2,7 +2,8 @@ const express = require('express')
 const router = express.Router()
 const productosController = require('../controllers/productos.controllers')
 const authorization = require('../middlewares/authorization')
-const upload = require('multer')({ dest: 'uploads/portadas/' })
+const { getUploadsFolder, removeBaseFolder } = require('../utils/files')
+const upload = require('multer')({ dest: getUploadsFolder()+'/portadas/' })
 
 // CRUD
 //router. ... get / post / put / delete , etc
@@ -16,7 +17,7 @@ router.get('/productos', authorization, async(req, res) => {
 router.post('/productos', authorization, upload.single("portada"), async(req, res) => {
     try{
         const producto = req.body
-        producto.portada = `${req.protocol}://${req.hostname}:${process.env.PORT}/${req.file.path.split("/").slice(1).join("/")}`
+        producto.portada = `${req.protocol}://${req.hostname}:${process.env.PORT}/${removeBaseFolder(req.file.path)}`
         const result = await productosController.create(producto)
         console.log("Producto creado", result)
         const productos = await productosController.getAll()
