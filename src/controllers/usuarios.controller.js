@@ -15,8 +15,19 @@ const getByEmail = async(correo) => {
     return await Usuario.findOne({correo: correo})
 }
 
+const getById = async(id) => {  
+    return await Usuario.findById(id).select('-contrasena')
+}
+
+
 const generarToken = async(payload) => {
     return jwt.sign(payload, process.env.JWT_SECRET)
 }
 
-module.exports = {obterTodosUsuarios, add, getByEmail, generarToken}
+module.exports = {
+    obterTodosUsuarios, 
+    add, 
+    getByEmail, 
+    generarToken,
+    getById
+}

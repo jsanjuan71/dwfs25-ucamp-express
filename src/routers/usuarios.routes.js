@@ -5,6 +5,7 @@ const router = express.Router()
 const userController = require('../controllers/usuarios.controller')
 
 const bcryptjs = require('bcryptjs')
+const authorization = require('../middlewares/authorization')
 
 router.get('/usuarios', async(request, response) => {
     const usuarios = await userController.obterTodosUsuarios()
@@ -56,6 +57,11 @@ router.post('/usuarios/ingresar', async(req, res) => {
     } catch(error){
         res.status(400).json({result: error.message})
     }
+})
+
+router.get('/usuarios/perfil', authorization, async(req, res) => {
+    const usuario = await userController.getById(req.user.id)
+    res.json({result: usuario})
 })
 
 module.exports = router
